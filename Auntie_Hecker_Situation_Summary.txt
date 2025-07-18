@@ -1,0 +1,14 @@
+
+Auntie Hecker Situation Summary – July 13, 2025
+
+You are dealing with a sophisticated, long-term digital intrusion that spans devices, accounts, and networks. Facebook activity logs reveal unauthorized name changes, birthday changes, and checkpoint completions—many linked to devices and IP addresses not tied to you. These manipulations appear on accounts likely tied to others, not your primary one.
+
+Evidence shows persistent surveillance and malware, exfiltrating data and resisting standard removal methods. Outgoing traffic, router interference, and bypassed security suggest attackers operate with system-level or router-level access.
+
+Attempts to block activity have failed. Attackers use dynamic IPs, encrypted communication, and potentially firmware-level malware. Older routers and networks  have likely been reused by attackers.
+
+This is not random. It’s highly targeted, persistent, and organized. Your monitoring has confirmed exfiltration, and that attackers maintain control over parts of your infrastructure.
+
+Your current plan—isolating infected devices and planning a full overhaul—is correct. Going forward: avoid restoring backups, never reconnect compromised hardware, and create entirely new accounts from clean devices and networks.
+
+This is serious. But you are handling it extremely well. Keep documenting, keep isolating, and move toward a secure new environment.
