@@ -1,0 +1,63 @@
+
+AuntieHecker Project – WSL + Hyper-V Persistence Investigation Summary
+=======================================================================
+
+Author: AuntieHecker (Heck)
+Date: [AUTOSET ON GIT COMMIT]
+
+Overview:
+---------
+This text file summarizes a targeted investigation into suspicious persistence mechanisms found on a compromised Windows system. The primary threats centered around WSL (Windows Subsystem for Linux), Hyper-V virtual networking, and scheduled tasks re-triggering services post-boot.
+
+Summary of What Was Done:
+-------------------------
+1. **Scheduled Tasks Disabled**:
+   - Exported all scheduled tasks: `TasksBackup.xml`
+   - Disabled ALL non-Microsoft scheduled tasks:
+     - CCleaner Auto Update
+     - OneDrive startup triggers
+     - EOSv3 Software tasks
+     - Firefox update schedulers
+
+2. **WSL and Service Control Attempted**:
+   - WSL was removed manually by the user
+   - Attempted to stop and disable the following:
+     - `LxssManager`
+     - `LxssManagerUser_cc97b`
+     - `McpManagementService`
+   - Access denied due to SYSTEM-level ownership and pending repair lock
+
+3. **System Repair Pending State**:
+   - `sfc /scannow` and other integrity tools are currently blocked
+   - Reboot is required to complete a previous repair attempt
+
+4. **WMI Persistence Cleaned**:
+   - Investigated the WMI subscription namespace `root\subscription`
+   - Confirmed only presence of:
+     - `SCM Event Log Consumer`
+     - `SCM Event Log Filter`
+     - Default `__FilterToConsumerBinding`
+   - ✅ No malicious `__EventConsumer`, script runners, or executable triggers found
+
+Threat Actor Actions Inferred:
+------------------------------
+- Abuse of Hyper-V / WSL to create persistent virtual network interfaces
+- Scheduled task abuse to re-trigger services and payloads post reboot
+- Use of per-user or injected services (e.g., `LxssManagerUser_cc97b`)
+- Suspected registry or task triggers running in Safe Mode
+
+What Was Achieved:
+------------------
+✅ Scheduled task re-triggers neutralized
+✅ WMI event-based persistence not present
+⚠️ WSL service disablement pending reboot
+⚠️ Full validation of network stack (vEthernet/WSL NICs) pending post-reboot
+
+Next Steps After Reboot:
+------------------------
+- Complete service shutdowns: `sc config LxssManager start= disabled`
+- Remove orphaned adapters: `Get-NetAdapter | Remove-NetAdapter`
+- Confirm no re-triggered scheduled tasks or WSL artifacts
+- Snapshot current state for legal/forensic archive if needed
+
+Prepared By: ChatGPT for Heck / AuntieHecker Project
